@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,22 +39,50 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player("Joe Schmoe", room['outside'])
 
 # Write a loop that:
-
-user_input = input('where would you like to go?')
-
+# * Prints the current room name
+# * Prints the current description (the textwrap module might be useful here).
+# * Waits for user input and decides what to do.
+#
+# If the user enters a cardinal direction, attempt to move to the room there.
+# Print an error message if the movement isn't allowed.
+#
+# If the user enters "q", quit the game.
 while True:
+    print(f"\nHey there, you are currently located {player.current_room.name}")
+    print(f'\n{player.current_room.description}')
+    user_input = input(
+        f'\nwhere to next, {player.name}?\n\nvalid options: [n], [s],'
+        ' [e], [w] or [q]\n-------------------------\n')
     if user_input == 'q':
         print('Thanks for playing!')
         break
-    user_input = input('where to next?')
+    elif user_input == 'n':
+        if player.current_room.n_to:
+            print('moving north...')
+            player.current_room = player.current_room.n_to
+        else:
+            print('I\'m afraid that is not possible')
+    elif user_input == 's':
+        if player.current_room.s_to:
+            print('moving south...')
+            player.current_room = player.current_room.s_to
+        else:
+            print('I\'m afraid that is not possible')
 
-    # * Prints the current room name
-    # * Prints the current description (the textwrap module might be useful here).
-    # * Waits for user input and decides what to do.
-    #
-    # If the user enters a cardinal direction, attempt to move to the room there.
-    # Print an error message if the movement isn't allowed.
-    #
-    # If the user enters "q", quit the game.
+    elif user_input == 'e':
+        if player.current_room.e_to:
+            print('moving east...')
+            player.current_room = player.current_room.e_to
+        else:
+            print('I\'m afraid that is not possible')
+    elif user_input == 'w':
+        if player.current_room.w_to:
+            print('moving west...')
+            player.current_room = player.current_room.w_to
+        else:
+            print('I\'m afraid that is not possible')
+    else:
+        print('**please enter one of the valid options**')
