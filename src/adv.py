@@ -44,18 +44,13 @@ player = Player("Joe Schmoe", room['outside'])
 
 def handle_move(input):
     attribute = input + '_to'
-    try:
-        room_move = getattr(player.current_room, attribute)
-        if room_move not None:
-            player.current_room = room_move
 
-    except AttributeError:
+    room_move = getattr(player.current_room, attribute)
+
+    if room_move is not None:
+        player.current_room = room_move
+    else:
         print('sorry that move is not available')
-    # if hasattr(player.current_room, attribute):
-    #     room_move = getattr(player.current_room, attribute)
-        # player.current_room = room_move
-    # else:
-    #     print('sorry that move is not available')
 
 
 # Write a loop that:
@@ -79,30 +74,5 @@ while True:
     elif user_input == 'n' or user_input == 's' or user_input == 'e' \
             or user_input == 'w':
         handle_move(user_input)
-    # elif user_input == 'n':
-    #     if player.current_room.n_to:
-    #         print('moving north...')
-    #         player.current_room = player.current_room.n_to
-    #     else:
-    #         print('I\'m afraid that is not possible')
-    # elif user_input == 's':
-    #     if player.current_room.s_to:
-    #         print('moving south...')
-    #         player.current_room = player.current_room.s_to
-    #     else:
-    #         print('I\'m afraid that is not possible')
-
-    # elif user_input == 'e':
-    #     if player.current_room.e_to:
-    #         print('moving east...')
-    #         player.current_room = player.current_room.e_to
-    #     else:
-    #         print('I\'m afraid that is not possible')
-    # elif user_input == 'w':
-    #     if player.current_room.w_to:
-    #         print('moving west...')
-    #         player.current_room = player.current_room.w_to
-    #     else:
-    #         print('I\'m afraid that is not possible')
     else:
         print('**please enter one of the valid options**')
