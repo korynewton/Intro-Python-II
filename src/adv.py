@@ -73,10 +73,13 @@ while True:
     print(player.current_room)
     user_input = input(
         f'\nwhats your next move, {player.name}?\n\nvalid options: [n], [s],'
-        ' [e], [w] or [q]\n-------------------------\n>')
+        ' [e], [w], [i] or [q]\n-------------------------\n>')
     if user_input == 'q':
         print('Thanks for playing!')
         break
+    elif user_input == 'i':
+        print("Current Inventory: " +
+              ", ".join([str(item.name) for item in player.inventory]))
     elif user_input in ['n', 's', 'e', 'w']:
         player.handle_move(user_input)
     else:
