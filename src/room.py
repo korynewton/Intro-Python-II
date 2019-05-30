@@ -17,3 +17,11 @@ class Room:
         string_of_items = "\n".join([str(x) for x in self.items])
         return f"\nCurrent Location: {self.name}...{self.description}.\n\n \
            Items availabe: \n{string_of_items}"
+
+    def add_to_room(self, item):
+        self.items.append(item)
+        print('**{item.name} added to room**')
+
+    def remove_from_room(self, item):
+        self.items.remove(item)
+        print('**{item.name} removed from room**')
