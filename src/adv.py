@@ -67,12 +67,11 @@ while True:
     print(f'\n{player.current_room.description}')
     user_input = input(
         f'\nwhere to next, {player.name}?\n\nvalid options: [n], [s],'
-        ' [e], [w] or [q]\n-------------------------\n')
+        ' [e], [w] or [q]\n-------------------------\n>')
     if user_input == 'q':
         print('Thanks for playing!')
         break
-    elif user_input == 'n' or user_input == 's' or user_input == 'e' \
-            or user_input == 'w':
+    elif user_input in ['n', 's', 'e', 'w']:
         handle_move(user_input)
     else:
         print('**please enter one of the valid options**')
