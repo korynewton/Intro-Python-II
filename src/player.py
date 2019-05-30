@@ -18,8 +18,8 @@ class Player:
 
     def pickup_item(self, item):
         self.inventory.append(item)
-        print('**{item.name} added to inventory**')
+        print(f'**{item.name} added to inventory**')
 
     def drop_item(self, item):
         self.inventory.remove(item)
-        print('**{item.name} removed from inventory**')
+        print(f'**{item.name} removed from inventory**')

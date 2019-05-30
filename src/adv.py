@@ -12,10 +12,10 @@ game_items = {
                    'provides a quick burst of concentration and energy'),
     'lamp': Item('lamp', 'a great way to see in the dark'),
     'water': Item('water',
-                  'an excellent way to stay hydrated on the \
-                       long journey that awaits you'),
-    'tissues': Item("tissues", "a great way to wipe your tears after \
-        discovering that the treasure is long gone")
+                  'an excellent way to stay hydrated on the ' +
+                  'long journey that awaits you'),
+    'tissues': Item("tissues", "a great way to wipe your tears after" +
+                    " discovering that the treasure is long gone")
 }
 
 
@@ -73,14 +73,26 @@ while True:
     print(player.current_room)
     user_input = input(
         f'\nwhats your next move, {player.name}?\n\nvalid options: [n], [s],'
-        ' [e], [w], [i] or [q]\n-------------------------\n>')
-    if user_input == 'q':
-        print('Thanks for playing!')
-        break
-    elif user_input == 'i':
-        print("Current Inventory: " +
-              ", ".join([str(item.name) for item in player.inventory]))
-    elif user_input in ['n', 's', 'e', 'w']:
-        player.handle_move(user_input)
+        ' [e], [w], [i], [q] or [pickup/drop *item*]\
+            \n-------------------------\n>').lower().split()
+    if len(user_input) == 1:
+        if user_input[0] in ['q', 'quit']:
+            print('Thanks for playing!')
+            break
+        elif user_input[0] in ['n', 's', 'e', 'w']:
+            player.handle_move(user_input[0])
+        elif user_input[0] in ['i', 'inventory']:
+            print("Current Inventory: " +
+                  ", ".join([str(item.name) for item in player.inventory]))
+    elif len(user_input) == 2 and user_input[0] in ['pickup', 'drop']:
+        action_item = game_items[user_input[1]]
+        if user_input[0] == 'pickup':
+            player.pickup_item(action_item)
+            player.current_room.remove_from_room(action_item)
+        elif user_input[0] == 'drop':
+            player.drop_item(action_item)
+            player.current_room.add_to_room(action_item)
+        else:
+            print('**Not a valid option**')
     else:
         print('**please enter one of the valid options**')

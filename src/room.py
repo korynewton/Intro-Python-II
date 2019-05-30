@@ -20,8 +20,8 @@ class Room:
 
     def add_to_room(self, item):
         self.items.append(item)
-        print('**{item.name} added to room**')
+        print(f'**{item.name} added to room**')
 
     def remove_from_room(self, item):
         self.items.remove(item)
-        print('**{item.name} removed from room**')
+        print(f'**{item.name} removed from room**')
