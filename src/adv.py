@@ -42,17 +42,6 @@ room['treasure'].s_to = room['narrow']
 player = Player("Joe Schmoe", room['outside'])
 
 
-def handle_move(input):
-    attribute = input + '_to'
-
-    room_move = getattr(player.current_room, attribute)
-
-    if room_move is not None:
-        player.current_room = room_move
-    else:
-        print('sorry that move is not available')
-
-
 # Write a loop that:
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
@@ -72,6 +61,6 @@ while True:
         print('Thanks for playing!')
         break
     elif user_input in ['n', 's', 'e', 'w']:
-        handle_move(user_input)
+        player.handle_move(user_input)
     else:
         print('**please enter one of the valid options**')
