@@ -1,7 +1,18 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
+
+game_items = {
+    'knife': Item('knife', 'a v sharp blade to protect oneself'),
+    'map': Item('map', 'a detailed map of the realm'),
+    'money': Item('money', 'bitcoin, of course'),
+    'coffee': Item('coffee',
+                   'provides a quick burst of concentration and energy'),
+    'lamp': Item('lamp', 'a great way to see in the dark')
+}
+
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -34,6 +45,13 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Add items to room
+room['outside'].items.append(game_items['knife'])
+room['foyer'].items.append(game_items['coffee'])
+room['overlook'].items.append(game_items['money'])
+room['narrow'].items.append(game_items['lamp'])
+
+
 #
 # Main
 #
@@ -42,17 +60,11 @@ room['treasure'].s_to = room['narrow']
 player = Player("Joe Schmoe", room['outside'])
 
 
-# Write a loop that:
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+# main loop
 while True:
     print(f"\nHey there, you are currently located {player.current_room.name}")
+    print("\nwell, would you look at this, it's a " +
+          str(player.current_room.items[0]))
     print(f'\n{player.current_room.description}')
     user_input = input(
         f'\nwhere to next, {player.name}?\n\nvalid options: [n], [s],'
