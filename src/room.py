@@ -4,14 +4,15 @@ from item import Item
 
 
 class Room:
+    n_to = None
+    s_to = None
+    e_to = None
+    w_to = None
+
     def __init__(self, name, description):
         self.name = name
         self.description = description
         self.items = []
-        n_to = None
-        s_to = None
-        e_to = None
-        w_to = None
 
     def __repr__(self):
         string_of_items = "\n".join([str(x) for x in self.items])
