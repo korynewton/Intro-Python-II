@@ -10,7 +10,12 @@ game_items = {
     'money': Item('money', 'bitcoin, of course'),
     'coffee': Item('coffee',
                    'provides a quick burst of concentration and energy'),
-    'lamp': Item('lamp', 'a great way to see in the dark')
+    'lamp': Item('lamp', 'a great way to see in the dark'),
+    'water': Item('water',
+                  'an excellent way to stay hydrated on the \
+                       long journey that awaits you'),
+    'tissues': Item("tissues", "a great way to wipe your tears after \
+        discovering that the treasure is long gone")
 }
 
 
@@ -47,9 +52,12 @@ room['treasure'].s_to = room['narrow']
 
 # Add items to room
 room['outside'].items.append(game_items['knife'])
+room['outside'].items.append(game_items['water'])
 room['foyer'].items.append(game_items['coffee'])
 room['overlook'].items.append(game_items['money'])
+room['overlook'].items.append(game_items['water'])
 room['narrow'].items.append(game_items['lamp'])
+room['treasure'].items.append(game_items['tissues'])
 
 
 #
@@ -62,12 +70,9 @@ player = Player("Joe Schmoe", room['outside'])
 
 # main loop
 while True:
-    print(f"\nHey there, you are currently located {player.current_room.name}")
-    print("\nwell, would you look at this, it's a " +
-          str(player.current_room.items[0]))
-    print(f'\n{player.current_room.description}')
+    print(player.current_room)
     user_input = input(
-        f'\nwhere to next, {player.name}?\n\nvalid options: [n], [s],'
+        f'\nwhats your next move, {player.name}?\n\nvalid options: [n], [s],'
         ' [e], [w] or [q]\n-------------------------\n>')
     if user_input == 'q':
         print('Thanks for playing!')

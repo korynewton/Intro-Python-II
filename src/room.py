@@ -12,3 +12,8 @@ class Room:
         s_to = None
         e_to = None
         w_to = None
+
+    def __repr__(self):
+        string_of_items = "\n".join([str(x) for x in self.items])
+        return f"\nCurrent Location: {self.name}...{self.description}.\n\n \
+           Items availabe: \n{string_of_items}"
