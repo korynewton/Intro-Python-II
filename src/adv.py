@@ -65,14 +65,15 @@ room['treasure'].items.append(game_items['tissues'])
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player("Joe Schmoe", room['outside'])
+new_player = input('What is your name? ')
+player = Player(new_player, room['outside'])
 
 
 # main loop
 while True:
     print(player.current_room)
     user_input = input(
-        f'\nwhats your next move, {player.name}?\n\nvalid options: [n], [s],'
+        f'\nwhat\'s your next move, {player.name}?\n\nvalid options: [n], [s], '
         ' [e], [w], [i], [q] or [pickup/drop *item*]\
             \n-------------------------\n>').lower().split()
     if len(user_input) == 1:
