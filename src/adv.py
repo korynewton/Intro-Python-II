@@ -1,6 +1,23 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
+
+game_items = {
+    'knife': Item('knife', 'a v sharp blade to protect oneself'),
+    'map': Item('map', 'a detailed map of the realm'),
+    'money': Item('money', 'bitcoin, of course'),
+    'coffee': Item('coffee',
+                   'provides a quick burst of concentration and energy'),
+    'lamp': Item('lamp', 'a great way to see in the dark'),
+    'water': Item('water',
+                  'an excellent way to stay hydrated on the ' +
+                  'long journey that awaits you'),
+    'tissues': Item("tissues", "a great way to wipe your tears after" +
+                    " discovering that the treasure is long gone")
+}
+
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -33,19 +50,50 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Add items to room
+room['outside'].items.append(game_items['knife'])
+room['outside'].items.append(game_items['water'])
+room['foyer'].items.append(game_items['coffee'])
+room['overlook'].items.append(game_items['money'])
+room['overlook'].items.append(game_items['water'])
+room['narrow'].items.append(game_items['lamp'])
+room['treasure'].items.append(game_items['tissues'])
+
+
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+new_player = input('What is your name? ')
+player = Player(new_player, room['outside'])
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+
+# main loop
+while True:
+    print(player.current_room)
+    user_input = input(
+        f'\nwhat\'s your next move, {player.name}?\n\nvalid options: [n], [s], '
+        ' [e], [w], [i], [q] or [pickup/drop *item*]\
+            \n-------------------------\n>').lower().split()
+    if len(user_input) == 1:
+        if user_input[0] in ['q', 'quit']:
+            print('Thanks for playing!')
+            break
+        elif user_input[0] in ['n', 's', 'e', 'w']:
+            player.handle_move(user_input[0])
+        elif user_input[0] in ['i', 'inventory']:
+            print("Current Inventory: " +
+                  ", ".join([str(item.name) for item in player.inventory]))
+    elif len(user_input) == 2 and user_input[0] in ['pickup', 'drop']:
+        action_item = game_items[user_input[1]]
+        if user_input[0] == 'pickup':
+            player.pickup_item(action_item)
+            player.current_room.remove_from_room(action_item)
+        elif user_input[0] == 'drop':
+            player.drop_item(action_item)
+            player.current_room.add_to_room(action_item)
+        else:
+            print('**Not a valid option**')
+    else:
+        print('**please enter one of the valid options**')
